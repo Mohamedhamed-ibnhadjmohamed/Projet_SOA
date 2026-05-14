@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+package account;
+
+service AccountService {
+  rpc CreateAccount (CreateAccountRequest) returns (AccountResponse);
+  rpc GetAccount    (GetAccountRequest)    returns (AccountResponse);
+  rpc ListAccounts  (ListAccountsRequest)  returns (ListAccountsResponse);
+  rpc UpdateBalance (UpdateBalanceRequest) returns (AccountResponse);
+  rpc DeleteAccount (DeleteAccountRequest) returns (StatusResponse);
+}
+
+message CreateAccountRequest {
+  string owner    = 1;
+  string type     = 2;   // courant | epargne
+  double balance  = 3;
+}
+
+message GetAccountRequest {
+  string id = 1;
+}
+
+message ListAccountsRequest {
+  string owner = 1;
+}
+
+message UpdateBalanceRequest {
+  string id        = 1;
+  double amount    = 2;
+  string operation = 3;  // credit | debit
+}
+
+message DeleteAccountRequest {
+  string id = 1;
+}
+
+message AccountResponse {
+  string id           = 1;
+  string owner        = 2;
+  string type         = 3;
+  double balance      = 4;
+  string status       = 5;
+  string created_at   = 6;
+  string error        = 7;
+}
+
+message ListAccountsResponse {
+  repeated AccountResponse accounts = 1;
+  string error                      = 2;
+}
+
+message StatusResponse {
+  bool   success = 1;
+  string message = 2;
+}
