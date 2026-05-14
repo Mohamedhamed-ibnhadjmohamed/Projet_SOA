@@ -3,14 +3,14 @@ syntax = "proto3";
 package notification;
 
 service NotificationService {
-  rpc SendNotification  (SendNotificationRequest)   returns (NotificationResponse);
-  rpc ListNotifications (ListNotificationsRequest)  returns (ListNotificationsResponse);
-  rpc MarkAsRead        (MarkAsReadRequest)         returns (NotificationResponse);
+  rpc SendNotification  (SendNotificationRequest)  returns (NotificationResponse);
+  rpc ListNotifications (ListNotificationsRequest) returns (ListNotificationsResponse);
+  rpc MarkAsRead        (MarkAsReadRequest)        returns (NotificationResponse);
 }
 
 message SendNotificationRequest {
   string user_id    = 1;
-  string type       = 2;   // virement | alerte | compte | info
+  string type       = 2;
   string title      = 3;
   string body       = 4;
   string account_id = 5;

@@ -1,17 +1,17 @@
 {
   "name": "transaction-service",
   "version": "1.0.0",
-  "description": "Microservice gRPC - Gestion des transactions bancaires (SQLite3 + Kafka)",
+  "description": "Microservice gRPC - Transactions bancaires (sqlite3 + Kafka)",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
-    "dev":   "nodemon src/server.js"
+    "dev": "nodemon src/server.js"
   },
   "dependencies": {
-    "@grpc/grpc-js":    "^1.9.0",
+    "@grpc/grpc-js": "^1.9.0",
     "@grpc/proto-loader": "^0.7.0",
-    "better-sqlite3":   "^9.0.0",
-    "kafkajs":          "^2.2.4",
-    "uuid":             "^9.0.0"
+    "kafkajs": "^2.2.4",
+    "sqlite3": "^5.1.7",
+    "uuid": "^9.0.0"
   }
 }
