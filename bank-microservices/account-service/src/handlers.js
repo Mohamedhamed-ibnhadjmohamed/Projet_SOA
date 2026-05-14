@@ -1,35 +1,30 @@
 const { v4: uuidv4 } = require('uuid');
 const db             = require('./db');
 
-// ─── helpers ────────────────────────────────────────────────────────────────
-const ok  = (row)  => ({ ...row, error: '' });
-const err = (msg)  => ({ error: msg });
+const ok  = row => ({ ...row, error: '' });
+const err = msg => ({ error: msg });
 
-// ─── handlers ───────────────────────────────────────────────────────────────
-
-function createAccount(call, callback, publish) {
+// ─── CreateAccount ────────────────────────────────────────────────────────────
+async function createAccount(call, callback, publish) {
   try {
     const { owner, type, balance } = call.request;
 
-    if (!owner || !type)    return callback(null, err('owner et type requis'));
+    if (!owner || !type)     return callback(null, err('owner et type requis'));
     if ((balance || 0) < 0) return callback(null, err('Le solde initial ne peut pas être négatif'));
 
     const id         = uuidv4();
     const created_at = new Date().toISOString();
+    const bal        = balance || 0;
 
-    db.prepare(`
-      INSERT INTO accounts (id, owner, type, balance, status, created_at)
-      VALUES (?, ?, ?, ?, 'active', ?)
-    `).run(id, owner, type, balance || 0, created_at);
+    await db.runAsync(
+      `INSERT INTO accounts (id, owner, type, balance, status, created_at) VALUES (?, ?, ?, ?, 'active', ?)`,
+      [id, owner, type, bal, created_at]
+    );
 
-    const account = db.prepare('SELECT * FROM accounts WHERE id = ?').get(id);
+    const account = await db.getAsync(`SELECT * FROM accounts WHERE id = ?`, [id]);
 
-    publish('account-created', {
-      event:     'ACCOUNT_CREATED',
-      accountId: id,
-      owner,
-      balance:   balance || 0,
-      timestamp: created_at
+    await publish('account-created', {
+      event: 'ACCOUNT_CREATED', accountId: id, owner, balance: bal, timestamp: created_at
     });
 
     callback(null, ok(account));
@@ -39,9 +34,10 @@ function createAccount(call, callback, publish) {
   }
 }
 
-function getAccount(call, callback) {
+// ─── GetAccount ───────────────────────────────────────────────────────────────
+async function getAccount(call, callback) {
   try {
-    const account = db.prepare('SELECT * FROM accounts WHERE id = ?').get(call.request.id);
+    const account = await db.getAsync(`SELECT * FROM accounts WHERE id = ?`, [call.request.id]);
     if (!account) return callback(null, err('Compte introuvable'));
     callback(null, ok(account));
   } catch (e) {
@@ -49,45 +45,44 @@ function getAccount(call, callback) {
   }
 }
 
-function listAccounts(call, callback) {
+// ─── ListAccounts ─────────────────────────────────────────────────────────────
+async function listAccounts(call, callback) {
   try {
     const { owner } = call.request;
     const accounts = owner
-      ? db.prepare('SELECT * FROM accounts WHERE owner = ? ORDER BY created_at DESC').all(owner)
-      : db.prepare('SELECT * FROM accounts ORDER BY created_at DESC').all();
+      ? await db.allAsync(`SELECT * FROM accounts WHERE owner = ? ORDER BY created_at DESC`, [owner])
+      : await db.allAsync(`SELECT * FROM accounts ORDER BY created_at DESC`);
     callback(null, { accounts, error: '' });
   } catch (e) {
     callback(null, { accounts: [], error: e.message });
   }
 }
 
-function updateBalance(call, callback, publish) {
+// ─── UpdateBalance ────────────────────────────────────────────────────────────
+async function updateBalance(call, callback, publish) {
   try {
     const { id, amount, operation } = call.request;
-    const account = db.prepare('SELECT * FROM accounts WHERE id = ?').get(id);
+    const account = await db.getAsync(`SELECT * FROM accounts WHERE id = ?`, [id]);
 
-    if (!account)                return callback(null, err('Compte introuvable'));
+    if (!account)                    return callback(null, err('Compte introuvable'));
     if (account.status !== 'active') return callback(null, err('Compte inactif'));
-    if (!['credit','debit'].includes(operation)) return callback(null, err('Opération invalide (credit | debit)'));
+    if (!['credit', 'debit'].includes(operation))
+                                     return callback(null, err('Opération invalide (credit | debit)'));
 
     let newBalance;
     if (operation === 'credit') {
       newBalance = account.balance + amount;
     } else {
-      if (account.balance < amount) return callback(null, err('Solde insuffisant'));
+      if (account.balance < amount)  return callback(null, err('Solde insuffisant'));
       newBalance = account.balance - amount;
     }
 
-    db.prepare('UPDATE accounts SET balance = ? WHERE id = ?').run(newBalance, id);
-    const updated = db.prepare('SELECT * FROM accounts WHERE id = ?').get(id);
+    await db.runAsync(`UPDATE accounts SET balance = ? WHERE id = ?`, [newBalance, id]);
+    const updated = await db.getAsync(`SELECT * FROM accounts WHERE id = ?`, [id]);
 
-    publish('balance-updated', {
-      event:      'BALANCE_UPDATED',
-      accountId:  id,
-      operation,
-      amount,
-      newBalance,
-      timestamp:  new Date().toISOString()
+    await publish('balance-updated', {
+      event: 'BALANCE_UPDATED', accountId: id, operation, amount, newBalance,
+      timestamp: new Date().toISOString()
     });
 
     callback(null, ok(updated));
@@ -96,18 +91,17 @@ function updateBalance(call, callback, publish) {
   }
 }
 
-function deleteAccount(call, callback, publish) {
+// ─── DeleteAccount ────────────────────────────────────────────────────────────
+async function deleteAccount(call, callback, publish) {
   try {
     const { id } = call.request;
-    const account = db.prepare('SELECT * FROM accounts WHERE id = ?').get(id);
+    const account = await db.getAsync(`SELECT * FROM accounts WHERE id = ?`, [id]);
     if (!account) return callback(null, { success: false, message: 'Compte introuvable' });
 
-    db.prepare("UPDATE accounts SET status = 'closed' WHERE id = ?").run(id);
+    await db.runAsync(`UPDATE accounts SET status = 'closed' WHERE id = ?`, [id]);
 
-    publish('account-closed', {
-      event:     'ACCOUNT_CLOSED',
-      accountId: id,
-      timestamp: new Date().toISOString()
+    await publish('account-closed', {
+      event: 'ACCOUNT_CLOSED', accountId: id, timestamp: new Date().toISOString()
     });
 
     callback(null, { success: true, message: 'Compte fermé avec succès' });

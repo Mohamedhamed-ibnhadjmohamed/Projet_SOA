@@ -11,9 +11,9 @@ service AccountService {
 }
 
 message CreateAccountRequest {
-  string owner    = 1;
-  string type     = 2;   // courant | epargne
-  double balance  = 3;
+  string owner   = 1;
+  string type    = 2;
+  double balance = 3;
 }
 
 message GetAccountRequest {
@@ -27,7 +27,7 @@ message ListAccountsRequest {
 message UpdateBalanceRequest {
   string id        = 1;
   double amount    = 2;
-  string operation = 3;  // credit | debit
+  string operation = 3;
 }
 
 message DeleteAccountRequest {
@@ -35,13 +35,13 @@ message DeleteAccountRequest {
 }
 
 message AccountResponse {
-  string id           = 1;
-  string owner        = 2;
-  string type         = 3;
-  double balance      = 4;
-  string status       = 5;
-  string created_at   = 6;
-  string error        = 7;
+  string id         = 1;
+  string owner      = 2;
+  string type       = 3;
+  double balance    = 4;
+  string status     = 5;
+  string created_at = 6;
+  string error      = 7;
 }
 
 message ListAccountsResponse {

@@ -4,38 +4,34 @@ const path        = require('path');
 const { Kafka }   = require('kafkajs');
 const handlers    = require('./handlers');
 
-// ─── Load proto ──────────────────────────────────────────────────────────────
+// ─── Proto ────────────────────────────────────────────────────────────────────
 const PROTO = path.join(__dirname, '../proto/account.proto');
 const pkg   = grpc.loadPackageDefinition(
   protoLoader.loadSync(PROTO, { keepCase: true, longs: String, enums: String, defaults: true, oneofs: true })
 ).account;
 
-// ─── Kafka producer ──────────────────────────────────────────────────────────
+// ─── Kafka producer ───────────────────────────────────────────────────────────
 const kafka    = new Kafka({ clientId: 'account-service', brokers: [process.env.KAFKA_BROKER || 'localhost:9092'], retry: { retries: 3 } });
 const producer = kafka.producer();
-
-let kafkaReady = false;
+let   kafkaOK  = false;
 
 async function connectKafka() {
   try {
     await producer.connect();
-    kafkaReady = true;
-    console.log('[account-service] Kafka producer connecté');
+    kafkaOK = true;
+    console.log('[account-service] Kafka connecté');
   } catch (e) {
-    console.warn('[account-service] Kafka indisponible — mode dégradé:', e.message);
+    console.warn('[account-service] Kafka indisponible (mode dégradé):', e.message);
   }
 }
 
 async function publish(topic, payload) {
-  if (!kafkaReady) return;
-  try {
-    await producer.send({ topic, messages: [{ value: JSON.stringify(payload) }] });
-  } catch (e) {
-    console.warn('[account-service] Kafka publish error:', e.message);
-  }
+  if (!kafkaOK) return;
+  try { await producer.send({ topic, messages: [{ value: JSON.stringify(payload) }] }); }
+  catch (e) { console.warn('[account-service] Kafka publish error:', e.message); }
 }
 
-// ─── gRPC service impl ───────────────────────────────────────────────────────
+// ─── gRPC service ─────────────────────────────────────────────────────────────
 const service = {
   createAccount: (call, cb) => handlers.createAccount(call, cb, publish),
   getAccount:    (call, cb) => handlers.getAccount(call, cb),
@@ -44,17 +40,15 @@ const service = {
   deleteAccount: (call, cb) => handlers.deleteAccount(call, cb, publish),
 };
 
-// ─── Bootstrap ───────────────────────────────────────────────────────────────
+// ─── Start ────────────────────────────────────────────────────────────────────
 async function main() {
   await connectKafka();
-
   const server = new grpc.Server();
   server.addService(pkg.AccountService.service, service);
-
   const PORT = process.env.PORT || '50051';
   server.bindAsync(`0.0.0.0:${PORT}`, grpc.ServerCredentials.createInsecure(), (err, port) => {
     if (err) throw err;
-    console.log(`[account-service] gRPC server listening on :${port}`);
+    console.log(`[account-service] gRPC listening on :${port}`);
   });
 }
 

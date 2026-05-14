@@ -1,7 +1,7 @@
-const express         = require('express');
-const cors            = require('cors');
-const morgan          = require('morgan');
-const bodyParser      = require('body-parser');
+const express          = require('express');
+const cors             = require('cors');
+const morgan           = require('morgan');
+const bodyParser       = require('body-parser');
 const { ApolloServer } = require('@apollo/server');
 const { expressMiddleware } = require('@as-integrations/express4');
 
@@ -13,55 +13,41 @@ async function bootstrap() {
   const app  = express();
   const PORT = process.env.PORT || 3000;
 
-  // ── Middlewares ────────────────────────────────────────────────────────────
   app.use(cors());
   app.use(morgan('dev'));
   app.use(bodyParser.json());
 
-  // ── REST ───────────────────────────────────────────────────────────────────
+  // REST
   app.use('/api', restRouter);
 
-  // ── Apollo GraphQL ─────────────────────────────────────────────────────────
+  // GraphQL (Apollo Server v4)
   const apollo = new ApolloServer({ typeDefs, resolvers });
   await apollo.start();
-  app.use('/graphql', expressMiddleware(apollo, {
-    context: async ({ req }) => ({ req })
-  }));
+  app.use('/graphql', expressMiddleware(apollo, { context: async ({ req }) => ({ req }) }));
 
-  // ── Health ─────────────────────────────────────────────────────────────────
-  app.get('/health', (_, res) => res.json({
-    status:    'OK',
-    service:   'api-gateway',
-    timestamp: new Date().toISOString()
-  }));
+  // Health
+  app.get('/health', (_, res) => res.json({ status: 'OK', service: 'api-gateway', timestamp: new Date().toISOString() }));
 
   app.get('/', (_, res) => res.json({
-    name: 'Banking App — API Gateway',
-    rest_base:  '/api',
-    graphql:    '/graphql',
-    health:     '/health',
-    rest_endpoints: {
+    name: 'Application Bancaire — API Gateway',
+    rest:    '/api',
+    graphql: '/graphql',
+    health:  '/health',
+    routes: {
       accounts:      ['POST /api/accounts', 'GET /api/accounts', 'GET /api/accounts/:id', 'PATCH /api/accounts/:id/balance', 'DELETE /api/accounts/:id'],
       transactions:  ['POST /api/transactions/transfer', 'GET /api/transactions', 'GET /api/transactions/:id', 'GET /api/transactions/history/:accountId'],
       notifications: ['POST /api/notifications', 'GET /api/notifications/:userId', 'PATCH /api/notifications/:id/read']
     }
   }));
 
-  // ── 404 / Error handlers ───────────────────────────────────────────────────
   app.use((req, res) => res.status(404).json({ error: `Route ${req.method} ${req.path} introuvable` }));
-  app.use((err, req, res, next) => {
-    console.error('[api-gateway] Error:', err.message);
-    res.status(500).json({ error: 'Erreur interne du serveur' });
-  });
+  app.use((err, req, res, next) => res.status(500).json({ error: err.message }));
 
   app.listen(PORT, () => {
-    console.log(`[api-gateway] REST     → http://localhost:${PORT}/api`);
-    console.log(`[api-gateway] GraphQL  → http://localhost:${PORT}/graphql`);
-    console.log(`[api-gateway] Health   → http://localhost:${PORT}/health`);
+    console.log(`[api-gateway] REST    → http://localhost:${PORT}/api`);
+    console.log(`[api-gateway] GraphQL → http://localhost:${PORT}/graphql`);
+    console.log(`[api-gateway] Health  → http://localhost:${PORT}/health`);
   });
 }
 
-bootstrap().catch(err => {
-  console.error('[api-gateway] Fatal:', err);
-  process.exit(1);
-});
+bootstrap().catch(err => { console.error('[api-gateway] Fatal:', err); process.exit(1); });
