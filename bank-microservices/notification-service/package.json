@@ -1,7 +1,16 @@
 {
+  "name": "notification-service",
+  "version": "1.0.0",
+  "description": "Microservice gRPC - Notifications bancaires (RxDB/NoSQL + Kafka consumer)",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev":   "nodemon src/server.js"
+  },
   "dependencies": {
-    "kafkajs": "^2.2.4",
-    "rxdb": "^17.2.0",
-    "uuid": "^14.0.0"
+    "@grpc/grpc-js":    "^1.9.0",
+    "@grpc/proto-loader": "^0.7.0",
+    "kafkajs":          "^2.2.4",
+    "uuid":             "^9.0.0"
   }
 }

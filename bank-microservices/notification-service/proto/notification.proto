@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package notification;
+
+service NotificationService {
+  rpc SendNotification  (SendNotificationRequest)   returns (NotificationResponse);
+  rpc ListNotifications (ListNotificationsRequest)  returns (ListNotificationsResponse);
+  rpc MarkAsRead        (MarkAsReadRequest)         returns (NotificationResponse);
+}
+
+message SendNotificationRequest {
+  string user_id    = 1;
+  string type       = 2;   // virement | alerte | compte | info
+  string title      = 3;
+  string body       = 4;
+  string account_id = 5;
+}
+
+message ListNotificationsRequest {
+  string user_id = 1;
+}
+
+message MarkAsReadRequest {
+  string id = 1;
+}
+
+message NotificationResponse {
+  string id         = 1;
+  string user_id    = 2;
+  string type       = 3;
+  string title      = 4;
+  string body       = 5;
+  string account_id = 6;
+  bool   read       = 7;
+  string created_at = 8;
+  string error      = 9;
+}
+
+message ListNotificationsResponse {
+  repeated NotificationResponse notifications = 1;
+  string error                                = 2;
+}
