@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "@grpc/grpc-js": "^1.14.3",
+    "better-sqlite3": "^12.10.0",
+    "kafkajs": "^2.2.4",
+    "uuid": "^14.0.0"
+  }
+}

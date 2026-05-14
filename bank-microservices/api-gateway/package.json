@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "@grpc/grpc-js": "^1.14.3",
+    "@grpc/proto-loader": "^0.8.1",
+    "apollo-server-express": "^3.13.0",
+    "express": "^4.22.2",
+    "graphql": "^16.14.0",
+    "protobufjs": "^8.3.0"
+  }
+}
