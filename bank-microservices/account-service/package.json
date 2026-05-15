@@ -1,7 +1,7 @@
 {
   "name": "account-service",
   "version": "1.0.0",
-  "description": "Microservice gRPC - Comptes bancaires (sqlite3)",
+  "description": "Microservice gRPC - Comptes bancaires (SQLite3 + Kafka)",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",

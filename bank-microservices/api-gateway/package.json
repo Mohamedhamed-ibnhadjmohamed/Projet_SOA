@@ -1,7 +1,7 @@
 {
   "name": "api-gateway",
   "version": "1.0.0",
-  "description": "API Gateway — REST (Express) + GraphQL (Apollo v4)",
+  "description": "API Gateway — REST (Express 4) + GraphQL (Apollo Server v4)",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",

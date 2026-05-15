@@ -1,13 +1,12 @@
 syntax = "proto3";
-
 package account;
 
 service AccountService {
-  rpc CreateAccount (CreateAccountRequest) returns (AccountResponse);
-  rpc GetAccount    (GetAccountRequest)    returns (AccountResponse);
-  rpc ListAccounts  (ListAccountsRequest)  returns (ListAccountsResponse);
-  rpc UpdateBalance (UpdateBalanceRequest) returns (AccountResponse);
-  rpc DeleteAccount (DeleteAccountRequest) returns (StatusResponse);
+  rpc CreateAccount    (CreateAccountRequest)  returns (AccountResponse);
+  rpc GetAccount       (GetAccountRequest)     returns (AccountResponse);
+  rpc ListAccounts     (ListAccountsRequest)   returns (AccountListResponse);
+  rpc UpdateBalance    (UpdateBalanceRequest)  returns (AccountResponse);
+  rpc DeleteAccount    (DeleteAccountRequest)  returns (AccountResponse);
 }
 
 message CreateAccountRequest {
@@ -44,12 +43,7 @@ message AccountResponse {
   string error      = 7;
 }
 
-message ListAccountsResponse {
+message AccountListResponse {
   repeated AccountResponse accounts = 1;
-  string error                      = 2;
-}
-
-message StatusResponse {
-  bool   success = 1;
-  string message = 2;
+  string error = 2;
 }

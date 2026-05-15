@@ -35,25 +35,22 @@ const typeDefs = gql`
     error:      String
   }
 
-  type StatusResult {
-    success: Boolean
-    message: String
-  }
-
   type Query {
-    account(id: String!): Account
-    accounts(owner: String): [Account]
-    transaction(id: String!): Transaction
-    transactions(account_id: String): [Transaction]
-    history(account_id: String!, date_from: String, date_to: String): [Transaction]
-    notifications(user_id: String!): [Notification]
+    account(id: String!):                Account
+    accounts(owner: String):             [Account]
+    transaction(id: String!):            Transaction
+    transactions(account_id: String):    [Transaction]
+    transactionHistory(account_id: String!, date_from: String, date_to: String): [Transaction]
+    notifications(user_id: String!):     [Notification]
   }
 
   type Mutation {
     createAccount(owner: String!, type: String!, balance: Float): Account
     updateBalance(id: String!, amount: Float!, operation: String!): Account
-    deleteAccount(id: String!): StatusResult
+    deleteAccount(id: String!): Account
+
     transfer(from_account: String!, to_account: String!, amount: Float!, description: String): Transaction
+
     sendNotification(user_id: String!, type: String, title: String, body: String!, account_id: String): Notification
     markNotificationRead(id: String!): Notification
   }

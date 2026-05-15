@@ -5,19 +5,18 @@ const path        = require('path');
 const OPTS = { keepCase: true, longs: String, enums: String, defaults: true, oneofs: true };
 const load = f => grpc.loadPackageDefinition(protoLoader.loadSync(f, OPTS));
 
-const ROOT = path.resolve(__dirname, '..', '..', '..', '..');
-// bank-microservices/api-gateway/src/grpc-clients/index.js
-// __dirname = .../api-gateway/src/grpc-clients
-// ROOT      = .../bank-microservices
+// __dirname = .../bank-microservices/api-gateway/src/grpc-clients
+// ../../../ = .../bank-microservices
+const ROOT = path.resolve(__dirname, '..', '..', '..');
 
-const accountPkg      = load(path.join(ROOT, 'account-service/proto/account.proto')).account;
-const transactionPkg  = load(path.join(ROOT, 'transaction-service/proto/transaction.proto')).transaction;
-const notificationPkg = load(path.join(ROOT, 'notification-service/proto/notification.proto')).notification;
+const accountPkg      = load(path.join(ROOT, 'account-service',      'proto', 'account.proto')).account;
+const transactionPkg  = load(path.join(ROOT, 'transaction-service',  'proto', 'transaction.proto')).transaction;
+const notificationPkg = load(path.join(ROOT, 'notification-service', 'proto', 'notification.proto')).notification;
 
 const creds = grpc.credentials.createInsecure();
 
-const accountClient      = new accountPkg.AccountService(      process.env.ACCOUNT_HOST      || 'localhost:50051', creds);
-const transactionClient  = new transactionPkg.TransactionService(process.env.TRANSACTION_HOST  || 'localhost:50052', creds);
+const accountClient      = new accountPkg.AccountService(         process.env.ACCOUNT_HOST      || 'localhost:50051', creds);
+const transactionClient  = new transactionPkg.TransactionService( process.env.TRANSACTION_HOST  || 'localhost:50052', creds);
 const notificationClient = new notificationPkg.NotificationService(process.env.NOTIFICATION_HOST || 'localhost:50053', creds);
 
 const rpc = (client, method, req) =>
