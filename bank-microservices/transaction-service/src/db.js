@@ -22,10 +22,7 @@ db.serialize(() => {
   `);
   db.run(`CREATE INDEX IF NOT EXISTS idx_from ON transactions(from_account)`);
   db.run(`CREATE INDEX IF NOT EXISTS idx_to   ON transactions(to_account)`);
-  db.run(`CREATE INDEX IF NOT EXISTS idx_date ON transactions(created_at)`);
 });
-
-// ── Promise helpers ───────────────────────────────────────────────────────────
 
 db.runAsync = (sql, params = []) =>
   new Promise((resolve, reject) =>

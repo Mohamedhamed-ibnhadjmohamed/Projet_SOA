@@ -7,7 +7,6 @@ if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
 
 const db = new sqlite3.Database(path.join(DATA_DIR, 'accounts.db'));
 
-// Initialize schema
 db.serialize(() => {
   db.run(`
     CREATE TABLE IF NOT EXISTS accounts (
@@ -22,9 +21,6 @@ db.serialize(() => {
   db.run(`CREATE INDEX IF NOT EXISTS idx_owner ON accounts(owner)`);
 });
 
-// ── Promise helpers ───────────────────────────────────────────────────────────
-
-/** Run INSERT / UPDATE / DELETE */
 db.runAsync = (sql, params = []) =>
   new Promise((resolve, reject) =>
     db.run(sql, params, function (err) {
@@ -33,13 +29,11 @@ db.runAsync = (sql, params = []) =>
     })
   );
 
-/** Fetch one row */
 db.getAsync = (sql, params = []) =>
   new Promise((resolve, reject) =>
     db.get(sql, params, (err, row) => (err ? reject(err) : resolve(row)))
   );
 
-/** Fetch all rows */
 db.allAsync = (sql, params = []) =>
   new Promise((resolve, reject) =>
     db.all(sql, params, (err, rows) => (err ? reject(err) : resolve(rows)))

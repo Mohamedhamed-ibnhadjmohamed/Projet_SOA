@@ -4,11 +4,9 @@ const db             = require('./db');
 const ok  = row => ({ ...row, error: '' });
 const err = msg => ({ error: msg });
 
-// ─── CreateAccount ────────────────────────────────────────────────────────────
 async function createAccount(call, callback, publish) {
   try {
     const { owner, type, balance } = call.request;
-
     if (!owner || !type)     return callback(null, err('owner et type requis'));
     if ((balance || 0) < 0) return callback(null, err('Le solde initial ne peut pas être négatif'));
 
@@ -20,7 +18,6 @@ async function createAccount(call, callback, publish) {
       `INSERT INTO accounts (id, owner, type, balance, status, created_at) VALUES (?, ?, ?, ?, 'active', ?)`,
       [id, owner, type, bal, created_at]
     );
-
     const account = await db.getAsync(`SELECT * FROM accounts WHERE id = ?`, [id]);
 
     await publish('account-created', {
@@ -29,12 +26,10 @@ async function createAccount(call, callback, publish) {
 
     callback(null, ok(account));
   } catch (e) {
-    console.error('[account-service] createAccount:', e.message);
     callback(null, err(e.message));
   }
 }
 
-// ─── GetAccount ───────────────────────────────────────────────────────────────
 async function getAccount(call, callback) {
   try {
     const account = await db.getAsync(`SELECT * FROM accounts WHERE id = ?`, [call.request.id]);
@@ -45,7 +40,6 @@ async function getAccount(call, callback) {
   }
 }
 
-// ─── ListAccounts ─────────────────────────────────────────────────────────────
 async function listAccounts(call, callback) {
   try {
     const { owner } = call.request;
@@ -58,7 +52,6 @@ async function listAccounts(call, callback) {
   }
 }
 
-// ─── UpdateBalance ────────────────────────────────────────────────────────────
 async function updateBalance(call, callback, publish) {
   try {
     const { id, amount, operation } = call.request;
@@ -66,14 +59,14 @@ async function updateBalance(call, callback, publish) {
 
     if (!account)                    return callback(null, err('Compte introuvable'));
     if (account.status !== 'active') return callback(null, err('Compte inactif'));
-    if (!['credit', 'debit'].includes(operation))
-                                     return callback(null, err('Opération invalide (credit | debit)'));
+    if (!['credit','debit'].includes(operation))
+                                     return callback(null, err('Opération invalide'));
 
     let newBalance;
     if (operation === 'credit') {
       newBalance = account.balance + amount;
     } else {
-      if (account.balance < amount)  return callback(null, err('Solde insuffisant'));
+      if (account.balance < amount) return callback(null, err('Solde insuffisant'));
       newBalance = account.balance - amount;
     }
 
@@ -91,7 +84,6 @@ async function updateBalance(call, callback, publish) {
   }
 }
 
-// ─── DeleteAccount ────────────────────────────────────────────────────────────
 async function deleteAccount(call, callback, publish) {
   try {
     const { id } = call.request;
