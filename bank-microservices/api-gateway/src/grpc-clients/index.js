@@ -29,6 +29,7 @@ module.exports = {
     create:        req => rpc(accountClient, 'createAccount', req),
     get:           req => rpc(accountClient, 'getAccount',    req),
     list:          req => rpc(accountClient, 'listAccounts',  req),
+    update:        req => rpc(accountClient, 'updateAccount', req),
     updateBalance: req => rpc(accountClient, 'updateBalance', req),
     delete:        req => rpc(accountClient, 'deleteAccount', req),
   },

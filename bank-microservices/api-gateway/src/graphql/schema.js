@@ -46,6 +46,7 @@ const typeDefs = gql`
 
   type Mutation {
     createAccount(owner: String!, type: String!, balance: Float): Account
+    updateAccount(id: String!, owner: String, type: String, status: String): Account
     updateBalance(id: String!, amount: Float!, operation: String!): Account
     deleteAccount(id: String!): Account
 

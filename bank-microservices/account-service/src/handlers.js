@@ -55,6 +55,40 @@ async function listAccounts(call, callback) {
   }
 }
 
+// ─── UpdateAccount ─────────────────────────────────────────────────────────────
+async function updateAccount(call, callback) {
+  try {
+    const { id, owner, type, status } = call.request;
+    if (!id) return callback(null, err('id requis'));
+
+    const account = await db.getAsync(`SELECT * FROM accounts WHERE id = ?`, [id]);
+    if (!account) return callback(null, err('Compte introuvable'));
+
+    // Valider le status si fourni
+    const validStatuses = ['active', 'closed', 'suspended'];
+    if (status && !validStatuses.includes(status))
+      return callback(null, err(`Status invalide. Valeurs acceptées : ${validStatuses.join(', ')}`));
+
+    // Valider le type si fourni
+    const validTypes = ['courant', 'epargne'];
+    if (type && !validTypes.includes(type))
+      return callback(null, err(`Type invalide. Valeurs acceptées : ${validTypes.join(', ')}`));
+
+    const newOwner  = owner  || account.owner;
+    const newType   = type   || account.type;
+    const newStatus = status || account.status;
+
+    await db.runAsync(
+      `UPDATE accounts SET owner = ?, type = ?, status = ? WHERE id = ?`,
+      [newOwner, newType, newStatus, id]
+    );
+    const updated = await db.getAsync(`SELECT * FROM accounts WHERE id = ?`, [id]);
+    callback(null, ok(updated));
+  } catch (e) {
+    callback(null, err(e.message));
+  }
+}
+
 // ─── UpdateBalance ─────────────────────────────────────────────────────────────
 async function updateBalance(call, callback, publish) {
   try {
@@ -108,4 +142,4 @@ async function deleteAccount(call, callback, publish) {
   }
 }
 
-module.exports = { createAccount, getAccount, listAccounts, updateBalance, deleteAccount };
+module.exports = { createAccount, getAccount, listAccounts, updateAccount, updateBalance, deleteAccount };

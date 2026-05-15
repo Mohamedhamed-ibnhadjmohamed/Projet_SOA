@@ -15,6 +15,7 @@ const resolvers = {
 
   Mutation: {
     createAccount:  (_, args) => grpcClients.accounts.create(args),
+    updateAccount:  (_, args) => grpcClients.accounts.update({ id: args.id, owner: args.owner || '', type: args.type || '', status: args.status || '' }),
     updateBalance:  (_, args) => grpcClients.accounts.updateBalance(args),
     deleteAccount:  (_, { id }) => grpcClients.accounts.delete({ id }),
 

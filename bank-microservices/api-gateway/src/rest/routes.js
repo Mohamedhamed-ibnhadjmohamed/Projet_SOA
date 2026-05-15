@@ -40,6 +40,20 @@ router.get('/accounts/:id', async (req, res) => {
   }
 });
 
+// PUT /api/accounts/:id — Modifier les infos d'un compte
+router.put('/accounts/:id', async (req, res) => {
+  try {
+    const { owner, type, status } = req.body;
+    if (!owner && !type && !status)
+      return res.status(400).json({ error: 'Au moins un champ requis : owner, type ou status' });
+    const result = await grpcClients.accounts.update({ id: req.params.id, owner: owner || '', type: type || '', status: status || '' });
+    if (result.error) return res.status(400).json({ error: result.error });
+    res.json(result);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
 // PATCH /api/accounts/:id/balance — Modifier le solde
 router.patch('/accounts/:id/balance', async (req, res) => {
   try {

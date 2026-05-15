@@ -41,6 +41,7 @@ async function bootstrap() {
         'POST   /api/accounts',
         'GET    /api/accounts',
         'GET    /api/accounts/:id',
+        'PUT    /api/accounts/:id',
         'PATCH  /api/accounts/:id/balance',
         'DELETE /api/accounts/:id'
       ],

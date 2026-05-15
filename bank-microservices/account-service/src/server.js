@@ -36,6 +36,7 @@ const service = {
   createAccount: (call, cb) => handlers.createAccount(call, cb, publish),
   getAccount:    (call, cb) => handlers.getAccount(call, cb),
   listAccounts:  (call, cb) => handlers.listAccounts(call, cb),
+  updateAccount: (call, cb) => handlers.updateAccount(call, cb),
   updateBalance: (call, cb) => handlers.updateBalance(call, cb, publish),
   deleteAccount: (call, cb) => handlers.deleteAccount(call, cb, publish),
 };
