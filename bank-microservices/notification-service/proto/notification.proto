@@ -1,11 +1,10 @@
 syntax = "proto3";
-
 package notification;
 
 service NotificationService {
   rpc SendNotification  (SendNotificationRequest)  returns (NotificationResponse);
-  rpc ListNotifications (ListNotificationsRequest) returns (ListNotificationsResponse);
-  rpc MarkAsRead        (MarkAsReadRequest)        returns (NotificationResponse);
+  rpc ListNotifications (ListNotificationsRequest) returns (NotificationListResponse);
+  rpc MarkAsRead        (MarkAsReadRequest)         returns (NotificationResponse);
 }
 
 message SendNotificationRequest {
@@ -36,7 +35,7 @@ message NotificationResponse {
   string error      = 9;
 }
 
-message ListNotificationsResponse {
+message NotificationListResponse {
   repeated NotificationResponse notifications = 1;
-  string error                                = 2;
+  string error = 2;
 }

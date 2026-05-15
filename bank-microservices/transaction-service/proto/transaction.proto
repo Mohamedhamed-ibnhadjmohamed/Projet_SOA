@@ -1,12 +1,11 @@
 syntax = "proto3";
-
 package transaction;
 
 service TransactionService {
-  rpc Transfer         (TransferRequest)         returns (TransactionResponse);
-  rpc GetTransaction   (GetTransactionRequest)   returns (TransactionResponse);
-  rpc ListTransactions (ListTransactionsRequest) returns (ListTransactionsResponse);
-  rpc GetHistory       (GetHistoryRequest)       returns (ListTransactionsResponse);
+  rpc Transfer         (TransferRequest)          returns (TransactionResponse);
+  rpc GetTransaction   (GetTransactionRequest)    returns (TransactionResponse);
+  rpc ListTransactions (ListTransactionsRequest)  returns (TransactionListResponse);
+  rpc GetHistory       (GetHistoryRequest)        returns (TransactionListResponse);
 }
 
 message TransferRequest {
@@ -42,7 +41,7 @@ message TransactionResponse {
   string error        = 9;
 }
 
-message ListTransactionsResponse {
+message TransactionListResponse {
   repeated TransactionResponse transactions = 1;
-  string error                              = 2;
+  string error = 2;
 }

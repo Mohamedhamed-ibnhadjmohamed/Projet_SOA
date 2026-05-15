@@ -6,7 +6,9 @@ const db             = require('./db');
 const kafka          = require('./kafka-producer');
 
 // ─── gRPC client → account-service ───────────────────────────────────────────
-const ACCOUNT_PROTO = path.join(__dirname, '../../account-service/proto/account.proto');
+// __dirname = .../bank-microservices/transaction-service/src
+// ../..     = .../bank-microservices
+const ACCOUNT_PROTO = path.join(__dirname, '..', '..', 'account-service', 'proto', 'account.proto');
 const accountPkg    = grpc.loadPackageDefinition(
   protoLoader.loadSync(ACCOUNT_PROTO, { keepCase: true, longs: String, enums: String, defaults: true, oneofs: true })
 ).account;
@@ -23,7 +25,6 @@ const rpc = (method, req) =>
     )
   );
 
-// ─── helpers ─────────────────────────────────────────────────────────────────
 const ok  = row => ({ ...row, error: '' });
 const err = msg => ({ error: msg });
 

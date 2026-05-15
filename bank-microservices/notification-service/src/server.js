@@ -18,8 +18,10 @@ function sendNotification(call, callback) {
     const { user_id, type, title, body, account_id } = call.request;
     if (!user_id || !body) return callback(null, err('user_id et body requis'));
     const doc = notifications.insert({
-      id: uuidv4(), user_id, type: type || 'info', title: title || 'Notification',
-      body, account_id: account_id || '', read: false, created_at: new Date().toISOString()
+      id: uuidv4(), user_id, type: type || 'info',
+      title: title || 'Notification', body,
+      account_id: account_id || '', read: false,
+      created_at: new Date().toISOString()
     });
     callback(null, ok(doc));
   } catch (e) { callback(null, err(e.message)); }

@@ -1,6 +1,6 @@
-const { Kafka }          = require('kafkajs');
-const { v4: uuidv4 }     = require('uuid');
-const { notifications }  = require('./db');
+const { Kafka }         = require('kafkajs');
+const { v4: uuidv4 }    = require('uuid');
+const { notifications } = require('./db');
 
 const kafka    = new Kafka({ clientId: 'notification-service', brokers: [process.env.KAFKA_BROKER || 'localhost:9092'], retry: { retries: 3 } });
 const consumer = kafka.consumer({ groupId: 'notification-group' });
@@ -8,16 +8,21 @@ const consumer = kafka.consumer({ groupId: 'notification-group' });
 const TOPICS = ['account-created', 'account-closed', 'balance-updated', 'transfer-completed', 'transfer-failed'];
 
 function buildNotification(topic, event) {
-  const base = { id: uuidv4(), account_id: event.accountId || event.fromAccount || '', read: false, created_at: new Date().toISOString() };
+  const base = {
+    id:         uuidv4(),
+    account_id: event.accountId || event.fromAccount || '',
+    read:       false,
+    created_at: new Date().toISOString()
+  };
   switch (topic) {
     case 'account-created':
-      return { ...base, user_id: event.owner,        type: 'compte',   title: 'Compte créé',          body: `Votre compte a été créé avec un solde de ${event.balance} TND.` };
+      return { ...base, user_id: event.owner,       type: 'compte',   title: 'Compte créé',       body: `Votre compte a été créé avec un solde de ${event.balance} TND.` };
     case 'account-closed':
-      return { ...base, user_id: event.accountId,    type: 'compte',   title: 'Compte fermé',          body: `Le compte ${event.accountId} a été fermé.` };
+      return { ...base, user_id: event.accountId,   type: 'compte',   title: 'Compte fermé',       body: `Le compte ${event.accountId} a été fermé.` };
     case 'balance-updated':
-      return { ...base, user_id: event.accountId,    type: 'info',     title: 'Solde mis à jour',      body: `Opération ${event.operation} de ${event.amount} TND. Nouveau solde : ${event.newBalance} TND.` };
+      return { ...base, user_id: event.accountId,   type: 'info',     title: 'Solde mis à jour',   body: `Opération ${event.operation} de ${event.amount} TND. Nouveau solde : ${event.newBalance} TND.` };
     case 'transfer-completed':
-      return { ...base, user_id: event.fromAccount,  type: 'virement', title: 'Virement effectué',     body: `Virement de ${event.amount} TND vers ${event.toAccount} effectué avec succès.` };
+      return { ...base, user_id: event.fromAccount, type: 'virement', title: 'Virement effectué',  body: `Virement de ${event.amount} TND vers ${event.toAccount} effectué.` };
     case 'transfer-failed':
       return { ...base, user_id: event.fromAccount || 'system', type: 'alerte', title: 'Virement échoué', body: `Le virement a échoué : ${event.reason}` };
     default:
