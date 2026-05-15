@@ -1,0 +1,102 @@
+[
+  {
+    "id": "78f83bcf-b96a-4195-bd98-c14e2f44e46d",
+    "user_id": "Ali Ben Salah",
+    "type": "info",
+    "title": "Test notification",
+    "body": "Votre solde a été mis à jour.",
+    "account_id": "REMPLACE_PAR_ID",
+    "read": false,
+    "created_at": "2026-05-15T10:18:06.268Z"
+  },
+  {
+    "id": "ddfc1f46-94c5-4923-a1c3-6bab702ee064",
+    "user_id": "Ali Ben Salah",
+    "type": "info",
+    "title": "Test notification",
+    "body": "Votre solde a été mis à jour.",
+    "account_id": "99065367-fe80-4c18-be0d-cd70c035ad83",
+    "read": true,
+    "created_at": "2026-05-15T10:18:27.711Z"
+  },
+  {
+    "id": "4a11f38b-47e2-4a5f-bc3c-23e7cd1ba8bd",
+    "user_id": "Ali Ben Salah",
+    "type": "virement",
+    "title": "Virement reçu",
+    "body": "Vous avez reçu 150 TND",
+    "account_id": "",
+    "read": true,
+    "created_at": "2026-05-15T14:59:38.413Z"
+  },
+  {
+    "id": "17b071ca-8688-45d1-815a-9b5910366775",
+    "user_id": "Ali Ben Salah",
+    "type": "info",
+    "title": "Test gRPC",
+    "body": "Message direct gRPC",
+    "account_id": "",
+    "read": true,
+    "created_at": "2026-05-15T16:01:02.004Z"
+  },
+  {
+    "id": "5574c0be-c073-45d4-965a-03621638a764",
+    "account_id": "e24e0193-df1d-423b-9c43-c5c216e5b7a2",
+    "read": false,
+    "created_at": "2026-05-15T16:47:14.158Z",
+    "user_id": "Ali Ben Salah",
+    "type": "compte",
+    "title": "Compte créé",
+    "body": "Votre compte a été créé avec un solde de 1000 TND."
+  },
+  {
+    "id": "cc44c066-7ecf-478c-881b-f59de2bfdf78",
+    "account_id": "b8f42db9-d242-4438-823b-578a33542514",
+    "read": false,
+    "created_at": "2026-05-15T16:49:25.843Z",
+    "user_id": "Sarra Ben Ali",
+    "type": "compte",
+    "title": "Compte créé",
+    "body": "Votre compte a été créé avec un solde de 500 TND."
+  },
+  {
+    "id": "d6cff20b-b45a-4719-a53e-e515e42a28a5",
+    "account_id": "61075a85-3a18-4ccf-95e6-b44b10838ff9",
+    "read": false,
+    "created_at": "2026-05-15T16:50:03.600Z",
+    "user_id": "Ali Ben Salah",
+    "type": "compte",
+    "title": "Compte créé",
+    "body": "Votre compte a été créé avec un solde de 1000 TND."
+  },
+  {
+    "id": "b23aea4a-ae40-44ae-9efa-ac4d1922d591",
+    "account_id": "61075a85-3a18-4ccf-95e6-b44b10838ff9",
+    "read": false,
+    "created_at": "2026-05-15T16:50:38.253Z",
+    "user_id": "61075a85-3a18-4ccf-95e6-b44b10838ff9",
+    "type": "info",
+    "title": "Solde mis à jour",
+    "body": "Opération debit de 150 TND. Nouveau solde : 850 TND."
+  },
+  {
+    "id": "68a99a2a-f32f-4a54-b768-0c5c52435a70",
+    "account_id": "b8f42db9-d242-4438-823b-578a33542514",
+    "read": false,
+    "created_at": "2026-05-15T16:50:38.267Z",
+    "user_id": "b8f42db9-d242-4438-823b-578a33542514",
+    "type": "info",
+    "title": "Solde mis à jour",
+    "body": "Opération credit de 150 TND. Nouveau solde : 650 TND."
+  },
+  {
+    "id": "6dd8f320-51fd-42b9-b685-ebc552c701c8",
+    "account_id": "61075a85-3a18-4ccf-95e6-b44b10838ff9",
+    "read": false,
+    "created_at": "2026-05-15T16:50:38.290Z",
+    "user_id": "61075a85-3a18-4ccf-95e6-b44b10838ff9",
+    "type": "virement",
+    "title": "Virement effectué",
+    "body": "Virement de 150 TND vers b8f42db9-d242-4438-823b-578a33542514 effectué."
+  }
+]

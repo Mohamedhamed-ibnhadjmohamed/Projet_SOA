@@ -2,8 +2,14 @@ const { Kafka }         = require('kafkajs');
 const { v4: uuidv4 }    = require('uuid');
 const { notifications } = require('./db');
 
-const kafka    = new Kafka({ clientId: 'notification-service', brokers: [process.env.KAFKA_BROKER || 'localhost:9092'], retry: { retries: 3 } });
-const consumer = kafka.consumer({ groupId: 'notification-group' });
+const kafka = new Kafka({
+  clientId: 'notification-service',
+  brokers: [process.env.KAFKA_BROKER || 'localhost:9092'],
+  connectionTimeout: 10000,
+  requestTimeout: 30000,
+  retry: { retries: 5, initialRetryTime: 300, maxRetryTime: 3000 }
+});
+const consumer = kafka.consumer({ groupId: 'notification-group-bank' });
 
 const TOPICS = ['account-created', 'account-closed', 'balance-updated', 'transfer-completed', 'transfer-failed'];
 
