@@ -42,7 +42,7 @@
   {
     "id": "5574c0be-c073-45d4-965a-03621638a764",
     "account_id": "e24e0193-df1d-423b-9c43-c5c216e5b7a2",
-    "read": false,
+    "read": true,
     "created_at": "2026-05-15T16:47:14.158Z",
     "user_id": "Ali Ben Salah",
     "type": "compte",
@@ -98,5 +98,205 @@
     "type": "virement",
     "title": "Virement effectué",
     "body": "Virement de 150 TND vers b8f42db9-d242-4438-823b-578a33542514 effectué."
+  },
+  {
+    "id": "3900610d-a73f-4ec7-9461-1eb165eddcf3",
+    "user_id": "Ali Ben Salah",
+    "type": "info",
+    "title": "Test notification",
+    "body": "Votre solde a été mis à jour.",
+    "account_id": "1c884777-1cc6-4935-a0aa-1fbd6afb0fee",
+    "read": true,
+    "created_at": "2026-05-18T20:39:11.386Z"
+  },
+  {
+    "id": "e1a4b587-4b04-4aab-b2d9-5aa6d0c784b7",
+    "user_id": "med haj",
+    "type": "virement",
+    "title": "Virement reçu",
+    "body": "Vous avez reçu 150 TND",
+    "account_id": "",
+    "read": true,
+    "created_at": "2026-05-18T21:28:04.580Z"
+  },
+  {
+    "id": "33899c08-de4c-4be0-8abb-37066160981b",
+    "user_id": "Ali Ben Salah",
+    "type": "info",
+    "title": "Test gRPC",
+    "body": "Message direct gRPC",
+    "account_id": "",
+    "read": false,
+    "created_at": "2026-05-18T22:03:36.017Z"
+  },
+  {
+    "id": "d759280f-d735-4b28-9104-a5c70088d0bb",
+    "account_id": "2f32276c-1d53-40b4-9c4d-6fab4321f63e",
+    "read": false,
+    "created_at": "2026-05-18T22:07:58.215Z",
+    "user_id": "hamed haj",
+    "type": "compte",
+    "title": "Compte créé",
+    "body": "Votre compte a été créé avec un solde de 1000 TND."
+  },
+  {
+    "id": "0bad88b9-d358-4098-afff-eef894480a45",
+    "account_id": "53509074-9df7-4dd4-af27-9aa61595443e",
+    "read": false,
+    "created_at": "2026-05-18T22:11:35.967Z",
+    "user_id": "53509074-9df7-4dd4-af27-9aa61595443e",
+    "type": "info",
+    "title": "Solde mis à jour",
+    "body": "Opération debit de 200 TND. Nouveau solde : 800 TND."
+  },
+  {
+    "id": "0696bccd-ef35-4fce-9499-8369b1a92375",
+    "account_id": "1c884777-1cc6-4935-a0aa-1fbd6afb0fee",
+    "read": false,
+    "created_at": "2026-05-18T22:11:35.980Z",
+    "user_id": "1c884777-1cc6-4935-a0aa-1fbd6afb0fee",
+    "type": "info",
+    "title": "Solde mis à jour",
+    "body": "Opération credit de 200 TND. Nouveau solde : 2150 TND."
+  },
+  {
+    "id": "0c74aff3-7beb-4580-aa60-2f1792bb2279",
+    "account_id": "53509074-9df7-4dd4-af27-9aa61595443e",
+    "read": false,
+    "created_at": "2026-05-18T22:11:36.011Z",
+    "user_id": "53509074-9df7-4dd4-af27-9aa61595443e",
+    "type": "virement",
+    "title": "Virement effectué",
+    "body": "Virement de 200 TND vers 1c884777-1cc6-4935-a0aa-1fbd6afb0fee effectué."
+  },
+  {
+    "id": "bd927a27-df7e-4bc9-90b2-d2d6b710ef80",
+    "account_id": "85532b3d-83f4-418e-929c-a34a4681c390",
+    "read": false,
+    "created_at": "2026-05-19T05:16:52.072Z",
+    "user_id": "hamed haj",
+    "type": "compte",
+    "title": "Compte créé",
+    "body": "Votre compte a été créé avec un solde de 1000 TND."
+  },
+  {
+    "id": "60fe5752-38fb-4951-be57-13a53974086e",
+    "account_id": "8cd6a928-1be6-40a2-a01d-ce3620049a9d",
+    "read": false,
+    "created_at": "2026-05-19T05:17:10.738Z",
+    "user_id": "mohamed hamed",
+    "type": "compte",
+    "title": "Compte créé",
+    "body": "Votre compte a été créé avec un solde de 1000 TND."
+  },
+  {
+    "id": "9027025e-b57e-4740-9bc5-59871f41b994",
+    "account_id": "3405dd4d-3fb0-4586-8e1a-46b87d15c2b1",
+    "read": false,
+    "created_at": "2026-05-19T07:53:16.532Z",
+    "user_id": "sarra haj",
+    "type": "compte",
+    "title": "Compte créé",
+    "body": "Votre compte a été créé avec un solde de 2000 TND."
+  },
+  {
+    "id": "cee08186-7c4a-4f1b-8bae-8ad8cb7384ad",
+    "account_id": "3405dd4d-3fb0-4586-8e1a-46b87d15c2b1",
+    "read": false,
+    "created_at": "2026-05-19T07:54:26.347Z",
+    "user_id": "3405dd4d-3fb0-4586-8e1a-46b87d15c2b1",
+    "type": "info",
+    "title": "Solde mis à jour",
+    "body": "Opération credit de 500 TND. Nouveau solde : 2500 TND."
+  },
+  {
+    "id": "3f10a078-c7bb-421e-806e-67e348bd5da9",
+    "account_id": "53509074-9df7-4dd4-af27-9aa61595443e",
+    "read": false,
+    "created_at": "2026-05-19T07:55:12.331Z",
+    "user_id": "53509074-9df7-4dd4-af27-9aa61595443e",
+    "type": "info",
+    "title": "Solde mis à jour",
+    "body": "Opération debit de 100 TND. Nouveau solde : 700 TND."
+  },
+  {
+    "id": "523d6776-f21a-482e-9179-055a6e123200",
+    "account_id": "1c884777-1cc6-4935-a0aa-1fbd6afb0fee",
+    "read": false,
+    "created_at": "2026-05-19T07:55:12.339Z",
+    "user_id": "1c884777-1cc6-4935-a0aa-1fbd6afb0fee",
+    "type": "info",
+    "title": "Solde mis à jour",
+    "body": "Opération credit de 100 TND. Nouveau solde : 2250 TND."
+  },
+  {
+    "id": "51e155a8-50b4-4c6f-bcda-5f501e2b9887",
+    "account_id": "53509074-9df7-4dd4-af27-9aa61595443e",
+    "read": false,
+    "created_at": "2026-05-19T07:55:12.348Z",
+    "user_id": "53509074-9df7-4dd4-af27-9aa61595443e",
+    "type": "virement",
+    "title": "Virement effectué",
+    "body": "Virement de 100 TND vers 1c884777-1cc6-4935-a0aa-1fbd6afb0fee effectué."
+  },
+  {
+    "id": "272e75c9-3c94-416f-9a15-aa1576edd4ad",
+    "account_id": "53509074-9df7-4dd4-af27-9aa61595443e",
+    "read": false,
+    "created_at": "2026-05-19T07:59:59.916Z",
+    "user_id": "53509074-9df7-4dd4-af27-9aa61595443e",
+    "type": "info",
+    "title": "Solde mis à jour",
+    "body": "Opération debit de 200 TND. Nouveau solde : 500 TND."
+  },
+  {
+    "id": "71011116-f801-44b0-aafb-0fd08c1d36a8",
+    "account_id": "1c884777-1cc6-4935-a0aa-1fbd6afb0fee",
+    "read": false,
+    "created_at": "2026-05-19T07:59:59.924Z",
+    "user_id": "1c884777-1cc6-4935-a0aa-1fbd6afb0fee",
+    "type": "info",
+    "title": "Solde mis à jour",
+    "body": "Opération credit de 200 TND. Nouveau solde : 2450 TND."
+  },
+  {
+    "id": "91ccdb7b-c00e-46c5-8b5e-093359a3ecfa",
+    "account_id": "53509074-9df7-4dd4-af27-9aa61595443e",
+    "read": false,
+    "created_at": "2026-05-19T07:59:59.930Z",
+    "user_id": "53509074-9df7-4dd4-af27-9aa61595443e",
+    "type": "virement",
+    "title": "Virement effectué",
+    "body": "Virement de 200 TND vers 1c884777-1cc6-4935-a0aa-1fbd6afb0fee effectué."
+  },
+  {
+    "id": "6e09b967-46e4-42c3-89ed-69171fc3fd8b",
+    "account_id": "3405dd4d-3fb0-4586-8e1a-46b87d15c2b1",
+    "read": false,
+    "created_at": "2026-05-19T08:24:27.797Z",
+    "user_id": "3405dd4d-3fb0-4586-8e1a-46b87d15c2b1",
+    "type": "info",
+    "title": "Solde mis à jour",
+    "body": "Opération debit de 200 TND. Nouveau solde : 2300 TND."
+  },
+  {
+    "id": "a01238ac-6caa-4028-a91b-bd2a83467049",
+    "account_id": "8c1488f7-e2d2-4fcb-836f-430ae2e71d54",
+    "read": false,
+    "created_at": "2026-05-19T08:57:06.984Z",
+    "user_id": "sarra med",
+    "type": "compte",
+    "title": "Compte créé",
+    "body": "Votre compte a été créé avec un solde de 1000 TND."
+  },
+  {
+    "id": "d18e9c7e-986f-4da1-8c2b-a0738cad8b55",
+    "account_id": "8c1488f7-e2d2-4fcb-836f-430ae2e71d54",
+    "read": false,
+    "created_at": "2026-05-19T08:57:54.500Z",
+    "user_id": "8c1488f7-e2d2-4fcb-836f-430ae2e71d54",
+    "type": "info",
+    "title": "Solde mis à jour",
+    "body": "Opération debit de 200 TND. Nouveau solde : 800 TND."
   }
 ]
